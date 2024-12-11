@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DishService } from '../dish.service';
 
 @Component({
   selector: 'app-dish-list',
@@ -7,8 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DishListComponent  implements OnInit {
 
-  constructor() { }
+  private dishList : Array<any> = [];
 
-  ngOnInit() {}
+  constructor(private dishService : DishService) { }
+
+  ngOnInit() {
+    this.dishService.getAllDishes().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.dishList = response;
+      }
+    })
+  }
+
+  getDishList() { return this.dishList };
 
 }

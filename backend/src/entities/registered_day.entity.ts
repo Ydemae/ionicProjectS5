@@ -5,6 +5,6 @@ export class RegisteredDay {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    day_date: Date;
+    @Column({ type: 'date', unique: true })
+    day_date: string;
 }

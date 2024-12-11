@@ -5,7 +5,7 @@ export class Dish {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({length:100})
+  @Column({length : 100})
   dish_name: string;
 
   @Column()
@@ -19,4 +19,10 @@ export class Dish {
 
   @Column()
   dish_glu: number;
+
+  @Column({length : 300})
+  image_url: string;
+
+  @Column({default : true})
+  active: boolean;
 }
