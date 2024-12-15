@@ -12,19 +12,25 @@ import { DishCardComponent } from './dish-card/dish-card.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ApiConnectionService } from './api-connection.service';
+import { DishDetailComponent } from './dish-detail/dish-detail.component';
+import { DishCreateComponent } from './dish-create/dish-create.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     DishListComponent,
     DishCardComponent,
-    NavbarComponent
+    NavbarComponent,
+    DishDetailComponent,
+    DishCreateComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ApiConnectionService],
   bootstrap: [AppComponent],

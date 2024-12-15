@@ -6,9 +6,19 @@ export class DishController {
 
     constructor(private readonly dishService: DishService) {}
 
-    @Get()
-    getAll(){
-        return this.dishService.getAll();
+    @Get('getAllActive/:name?')
+    getAllActive(@Param('name') name : string | null){
+        return this.dishService.getAllActive(name);
+    }
+
+    @Get('getAllInactive/:name?')
+    getAllInactive(@Param('name') name : string | null){
+        return this.dishService.getAllInactive(name);
+    }
+
+    @Get('getAll/:name?')
+    getAll(@Param('name') name : string | null){
+        return this.dishService.getAll(name);
     }
 
     @Get(':id')

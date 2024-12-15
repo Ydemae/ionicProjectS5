@@ -13,6 +13,9 @@ export class DishCardComponent  implements OnInit {
   @Input()
   imageUrl : string = "";
 
+  @Input()
+  id : number = 0;
+
   constructor() { }
 
   ngOnInit() {}

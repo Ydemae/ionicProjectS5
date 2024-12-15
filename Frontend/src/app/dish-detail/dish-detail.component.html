@@ -1,0 +1,52 @@
+<div class="content-wrapper">
+
+  <div *ngIf="this.showNotFoundError; else NormalCase">
+    <div class="alert alert-dismissible alert-danger">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      An error occurred preventing the dish from being loaded. Please make sure the given id is correct or try to refresh the page. If the problem persists, please contact customer support.
+    </div>
+  </div>
+
+  <ng-template #NormalCase>
+
+    <div *ngIf="this.getIsFetched(); else notFetchedBlock">
+
+      <div class="modal" [ngClass]="{'show' : this.showModal}">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{this.modalTitle}}</h5>
+              <button type="button" class="btn-close" (click)="this.hideModal()" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="false"></span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {{this.modalText}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary float-right" data-bs-dismiss="modal" (click)="this.hideModal()">Cancel</button>
+              <button type="button" class="btn btn-danger float-left" (click)="deleteDish()" *ngIf="this.showDeletionButton">Delete</button>
+              <button type="button" class="btn btn-danger float-left" (click)="deactivateDish()" *ngIf="this.showDeactivationButton">Deactivate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h1>{{this.getDishDetail().dish_name}}</h1>
+  
+  
+      <button class="btn btn-danger" (click)="popDeletionConfirmationModal()">Delete</button>
+  
+      <button class="btn btn-primary">Edit</button>
+    </div>
+
+
+
+    <ng-template #notFetchedBlock>
+      <div class="alert alert-dismissible alert-secondary">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong class="text-center">Data is being fetched</strong>
+      </div>
+    </ng-template>
+  </ng-template>
+</div>

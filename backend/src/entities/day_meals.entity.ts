@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
   import { Dish } from './dish.entity';
   import { RegisteredDay } from './registered_day.entity';
   
@@ -14,5 +14,8 @@ export class DayMeals {
     @ManyToOne(() => RegisteredDay, (registeredDay) => registeredDay.id, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'day_id' })
     day: RegisteredDay;
+
+    @Column()
+    quantity : number;
 }
   

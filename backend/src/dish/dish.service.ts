@@ -10,8 +10,46 @@ export class DishService {
         @InjectRepository(Dish) private readonly dishRepository : Repository<Dish>
     ){}
 
-    async getAll() : Promise<Dish[]>{
-        return this.dishRepository.find();
+    async getAll(dish_name : string | null) : Promise<Dish[]>{
+        let query = "SELECT id, dish_name, dish_kcal, dish_prot, dish_lip, dish_glu, image_url, active from dish"
+
+        let parameters = []
+
+
+        if (dish_name && dish_name != ""){
+            query += "Where LOWER(dish_name) LIKE LOWER(?)";
+            parameters.push(`%${dish_name}%`);
+        }
+
+        return await this.dishRepository.query(query, parameters);
+    }
+
+    async getAllActive(dish_name : string | null) : Promise<Dish[]>{
+        let query = "SELECT id, dish_name, dish_kcal, dish_prot, dish_lip, dish_glu, image_url, active from dish WHERE active = 1"
+
+        let parameters = []
+
+
+        if (dish_name && dish_name != ""){
+            query += " AND LOWER(dish_name) LIKE LOWER(?)";
+            parameters.push(`%${dish_name}%`);
+        }
+
+        return await this.dishRepository.query(query, parameters);
+    }
+
+    async getAllInactive(dish_name : string | null) : Promise<Dish[]>{
+        let query = "SELECT id, dish_name, dish_kcal, dish_prot, dish_lip, dish_glu, image_url, active from dish WHERE active = 0"
+
+        let parameters = []
+
+
+        if (dish_name && dish_name != ""){
+            query += " AND LOWER(dish_name) LIKE LOWER(?)";
+            parameters.push(`%${dish_name}%`);
+        }
+
+        return await this.dishRepository.query(query, parameters);
     }
 
     async getOneById(id : number) : Promise<Dish>{
@@ -54,12 +92,12 @@ export class DishService {
         try{
             const dishToRemove = await this.getOneById(id);
             
-            if (this.dishIsInAMeal(id)){
-                return 2;
-            }
-
             if (!dishToRemove){
                 return 3;
+            }
+
+            if (this.dishIsInAMeal(id)){
+                return 2;
             }
 
             this.dishRepository.remove(dishToRemove);
@@ -79,13 +117,18 @@ export class DishService {
          * Returns a code:
          * 0 - dish successfully deactivated
          * 1 - Unknown error occurred preventing the dish from being deactivated
+         * 2 - The dish couldn't be fetched or doesn't exists anymore
          */
         try{
             if (!this.checkDishIsActivated(id)){
-                return 0 //Dish was already deactivated
+                return 0; //Dish was already deactivated
             }
 
             let dish = await this.getOneById(id);
+            
+            if (!dish){
+                return 2;
+            }
 
             dish["active"] = false;
             
@@ -121,5 +164,7 @@ export class DishService {
             return 1;
         }
     }
+
+
       
 }

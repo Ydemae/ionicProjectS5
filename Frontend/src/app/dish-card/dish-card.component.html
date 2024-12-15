@@ -1,6 +1,8 @@
-<div class="card border-primary mb-3" style="max-width: 20rem;">
-  <div class="card-header">{{this.name}}</div>
-  <div class="card-body">
-    <img class="card-img" src = "{{this.imageUrl}}" alt="">
-  </div>
-</div>
+<ion-card class="card border-primary mb-3" style="max-width: 20rem;">
+  <a [routerLink]="['/dish/' + this.id]" style="text-decoration: none;">
+    <div class="card-header text-white text-center">{{this.name}}</div>
+    <div class="card-body">
+      <img class="card-img" src = "{{this.imageUrl}}" alt="">
+    </div>
+  </a>
+</ion-card>
