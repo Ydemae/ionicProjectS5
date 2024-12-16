@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { DishListComponent } from './dish-list/dish-list.component';
 import { DishDetailComponent } from './dish-detail/dish-detail.component';
+import { DishCreateComponent } from './dish-create/dish-create.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'dish/:id',
     component: DishDetailComponent
+  },
+  {
+    path: 'dish/create',
+    component: DishCreateComponent
   },
 ];
 

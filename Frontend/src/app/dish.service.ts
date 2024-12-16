@@ -38,4 +38,8 @@ export class DishService {
   activateDish(id : number){
     return this.apiConnection.getApi(`/dish/activate/${id}`);
   }
+
+  createDish(data : Dish){
+
+  }
 }

@@ -26,4 +26,12 @@ export class ToastService {
     this.showToast(message, 2000, 'danger');
   }
 
+  showWarningToast(message : string){
+    this.showToast(message, 2000, 'warning');
+  }
+
+  showSuccessToast(message : string){
+    this.showToast(message, 2000, 'success');
+  }
+
 }

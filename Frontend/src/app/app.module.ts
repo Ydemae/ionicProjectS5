@@ -15,6 +15,9 @@ import { ApiConnectionService } from './api-connection.service';
 import { DishDetailComponent } from './dish-detail/dish-detail.component';
 import { DishCreateComponent } from './dish-create/dish-create.component';
 import { CommonModule } from '@angular/common';
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { FormsModule } from '@angular/forms';
+import { DishFormComponent } from './dish-form/dish-form.component';
 
 @NgModule({
   declarations: [
@@ -23,14 +26,17 @@ import { CommonModule } from '@angular/common';
     DishCardComponent,
     NavbarComponent,
     DishDetailComponent,
-    DishCreateComponent
+    DishCreateComponent,
+    DishFormComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    IonicStorageModule.forRoot(),
+    FormsModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ApiConnectionService],
   bootstrap: [AppComponent],

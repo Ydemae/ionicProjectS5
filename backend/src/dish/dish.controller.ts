@@ -7,47 +7,48 @@ export class DishController {
     constructor(private readonly dishService: DishService) {}
 
     @Get('getAllActive/:name?')
-    getAllActive(@Param('name') name : string | null){
-        return this.dishService.getAllActive(name);
+    async getAllActive(@Param('name') name : string | null){
+        return await this.dishService.getAllActive(name);
     }
 
     @Get('getAllInactive/:name?')
-    getAllInactive(@Param('name') name : string | null){
-        return this.dishService.getAllInactive(name);
+    async getAllInactive(@Param('name') name : string | null){
+        return await this.dishService.getAllInactive(name);
     }
 
     @Get('getAll/:name?')
-    getAll(@Param('name') name : string | null){
-        return this.dishService.getAll(name);
+    async getAll(@Param('name') name : string | null){
+        return await this.dishService.getAll(name);
     }
 
     @Get(':id')
-    getOneById(@Param('id') id : number){
-        return this.dishService.getOneById(id);
+    async getOneById(@Param('id') id : number){
+        return await this.dishService.getOneById(id);
     }
 
     @Post('update')
-    update(@Body() data : any){
+    async update(@Body() data : any){
         console.log(data);
     }
 
     @Post('create')
-    create(@Body() data : any){
-        return {"code" : this.dishService.createDish(data)};
+    async create(@Body() data : any){
+        return data;
+        //return {"code" : await this.dishService.createDish(data)};
     }
 
     @Get('delete/:id')
-    delete(@Param('id') id : number){
-        return {"code" : this.dishService.deleteDish(id)};
+    async delete(@Param('id') id : number){
+        return {"code" : await this.dishService.deleteDish(id)};
     }
 
     @Get('deactivate/:id')
-    deactivate(@Param('id') id : number){
-        return {"code" : this.dishService.deactivateDish(id)};
+    async deactivate(@Param('id') id : number){
+        return {"code" : await this.dishService.deactivateDish(id)};
     }
 
     @Get('activate/:id')
-    activate(@Param('id') id : number){
-        return {"code" : this.dishService.activateDish(id)};
+    async activate(@Param('id') id : number){
+        return {"code" : await this.dishService.activateDish(id)};
     }
 }

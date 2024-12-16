@@ -78,7 +78,7 @@ export class DishService {
     }
 
     async dishIsInAMeal(id : number): Promise<boolean> {
-        return await this.dishRepository.query("SELECT COUNT(*) FROM dish WHERE dish.id = day_meals.dish_id AND dish.id = ?", [id]) > 0;
+        return await this.dishRepository.query("SELECT COUNT(*) FROM dish, day_meals WHERE dish.id = day_meals.dish_id AND dish.id = ?", [id]) > 0;
     }
 
     async deleteDish(id : number): Promise<number> {
@@ -96,7 +96,7 @@ export class DishService {
                 return 3;
             }
 
-            if (this.dishIsInAMeal(id)){
+            if (await this.dishIsInAMeal(id)){
                 return 2;
             }
 
@@ -120,7 +120,7 @@ export class DishService {
          * 2 - The dish couldn't be fetched or doesn't exists anymore
          */
         try{
-            if (!this.checkDishIsActivated(id)){
+            if (! await this.checkDishIsActivated(id)){
                 return 0; //Dish was already deactivated
             }
 
@@ -148,7 +148,7 @@ export class DishService {
          * 1 - Unknown error occurred preventing the dish from being deactivated
          */
         try{
-            if (this.checkDishIsActivated(id)){
+            if (await this.checkDishIsActivated(id)){
                 return 0 //Dish was already activated
             }
 

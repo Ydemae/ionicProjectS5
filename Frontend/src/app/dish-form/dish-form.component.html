@@ -1,0 +1,70 @@
+<form>
+  <ion-row class="margin-top">
+    <ion-col size="4">
+      <label>Name</label>
+    </ion-col>
+    <ion-col size="8">
+      <ion-input type="text" class="form-control" [(ngModel)]="dishData.dish_name"/>
+    </ion-col>
+    <div class="text-danger">{{this.nameErrorMessage}}</div>
+  </ion-row>
+
+  <ion-row class="margin-top">
+    <ion-col size="4">
+      <label>Active</label>
+    </ion-col>
+    <ion-col size="8">
+      <ion-input type="checkbox" [(ngModel)]="dishData.active"/>
+    </ion-col>
+  </ion-row>
+
+  <h4>Macros for 100g</h4>
+  <ion-row class="margin-top">
+    <ion-col size="4">
+      <label>Kcal</label>
+    </ion-col>
+    <ion-col size="8">
+      <ion-input type="number" class="form-control" [(ngModel)]="dishData.dish_kcal"/>
+    </ion-col>
+    <div class="text-danger">{{this.kcalErrorMessage}}</div>
+  </ion-row>
+  <ion-row class="margin-top">
+    <ion-col size="4">
+      <label>Prot</label>
+    </ion-col>
+    <ion-col size="8">
+      <ion-input type="number" class="form-control" [(ngModel)]="dishData.dish_prot"/>
+    </ion-col>
+    <div class="text-danger">{{this.protErrorMessage}}</div>
+  </ion-row>
+  <ion-row class="margin-top">
+    <ion-col size="4">
+      <label>Lipids</label>
+    </ion-col>
+    <ion-col size="8">
+      <ion-input type="text" class="form-control" [(ngModel)]="dishData.dish_lip"/>
+    </ion-col>
+    <div class="text-danger">{{this.lipErrorMessage}}</div>
+  </ion-row>
+  <ion-row class="margin-top">
+    <ion-col size="4">
+      <label>Carbs</label>
+    </ion-col>
+    <ion-col size="8">
+      <ion-input type="text" class="form-control" [(ngModel)]="dishData.dish_glu"/>
+    </ion-col>
+    <div class="text-danger">{{this.gluErrorMessage}}</div>
+  </ion-row>
+
+  <h4>Image</h4>
+  <ion-img src="{{this.dishData.image_url != '' ? this.dishData.image_url :  'https://cdn.pixabay.com/photo/2016/10/08/18/35/help-1724292_1280.png'}}" alt=""/>
+
+  <ion-row class="text-center">
+    <ion-col size="6">
+      <ion-button type="button" color="success" (click)="onSubmit()">Submit</ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button type="button" color="danger" (click)="onCancel()">Cancel</ion-button>
+    </ion-col>
+  </ion-row>
+</form>
