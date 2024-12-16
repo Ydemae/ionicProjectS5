@@ -1,9 +1,9 @@
-<div class="text-center">
+<div class="text-center margin-top">
   <a href="#" class="btn btn-primary">Create a dish</a>
   <div>Click the cards to see the dish detail</div>
 </div>
 
-<ion-row>
+<ion-row class="margin-top">
   <ion-col sizeLg="3" sizeMd="4" sizeXs="6" *ngFor="let dish of this.getDishList()">
     <app-dish-card [imageUrl]="dish['image_url']" [name]="dish['dish_name']" [id]="dish['id']"></app-dish-card>
   </ion-col>

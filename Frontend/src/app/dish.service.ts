@@ -12,7 +12,15 @@ export class DishService {
   constructor(private apiConnection : ApiConnectionService ) { }
 
   getAllDishes(){
-    return this.apiConnection.getApi("/dish")
+    return this.apiConnection.getApi("/dish/getAll/");
+  }
+
+  getAllActive(){
+    return this.apiConnection.getApi("/dish/getAllActive/");
+  }
+
+  getAllInactive(){
+    return this.apiConnection.getApi("/dish/getAllInactive/");
   }
 
   getDishById(id : number) : Observable<Dish>{

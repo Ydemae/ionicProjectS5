@@ -33,11 +33,43 @@
       </div>
 
       <h1>{{this.getDishDetail().dish_name}}</h1>
+
+      <h3 class="margin-top">Valeurs nutritionnelles pour 100g</h3>
+      <table class="table table-hover text-center">
+        <thead>
+          <tr>
+            <th>Calories</th>
+            <th>Protéines</th>
+            <th>Lipides</th>
+            <th>Glucides</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{this.getDishDetail().dish_kcal}}</td>
+            <td>{{this.getDishDetail().dish_prot}}</td>
+            <td>{{this.getDishDetail().dish_lip}}</td>
+            <td>{{this.getDishDetail().dish_glu}}</td>
+          </tr>
+        </tbody>
+      </table>
   
   
-      <button class="btn btn-danger" (click)="popDeletionConfirmationModal()">Delete</button>
-  
-      <button class="btn btn-primary">Edit</button>
+      <ion-row class="text-center">
+        <ion-col sizeXs="6" sizeMd="4" sizeLg="3">
+          <button class="btn btn-danger" (click)="popDeletionConfirmationModal()" *ngIf="this.getDishDetail().active">Delete</button>
+        </ion-col>
+        <ion-col sizeXs="6" sizeMd="4" sizeLg="3">
+          <button class="btn btn-warning" (click)="popDeactivationConfirmationModal()" *ngIf="this.getDishDetail().active">Deactivate</button>
+        </ion-col>
+        <ion-col sizeXs="6" sizeMd="4" sizeLg="3">
+          <button class="btn btn-primary" (click)="popReactivationConfirmationModal()" *ngIf="!this.getDishDetail().active">Reactivate</button>
+        </ion-col>
+        <ion-col sizeXs="6" sizeMd="4" sizeLg="3">
+
+        </ion-col>
+        <button class="btn btn-primary">Edit</button>
+      </ion-row>
     </div>
 
 

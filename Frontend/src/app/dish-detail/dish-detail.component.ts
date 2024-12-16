@@ -82,6 +82,22 @@ export class DishDetailComponent  implements OnInit {
     })
   }
 
+  reactivateDish(){
+    this.dishService.deactivateDish(this.dishDetail!.id).subscribe({
+      next: (response) => {
+        if (response["code"] == 0){
+          //TO DO - Manage success
+        }
+        else {
+          
+        }
+      },
+      error: (error) => {
+        this.toastService.showErrorToast("Unexpected error occurred when trying to deactivate dish.")
+      }
+    })
+  }
+
   popDeletionConfirmationModal(){
     this.modalTitle = "Dish deletion"
     this.modalText = `You are about to permanently delete the dish ${this.dishDetail?.dish_name}, you won't be able to restore it later, are you sure about your decision ?`;
@@ -92,6 +108,13 @@ export class DishDetailComponent  implements OnInit {
   popDeactivationConfirmationModal(){
     this.modalTitle = "Dish deactivation"
     this.modalText = `You are about to deactivate the dish ${this.dishDetail?.dish_name}, you will be able to reactivate it anytime.`
+    this.showDeactivationButton = true;
+    this.showModal = true;
+  }
+
+  popReactivationConfirmationModal(){
+    this.modalTitle = "Dish reactivation"
+    this.modalText = `You are about to reactivate the dish ${this.dishDetail?.dish_name}, you will be able to reactivate it anytime.`
     this.showDeactivationButton = true;
     this.showModal = true;
   }

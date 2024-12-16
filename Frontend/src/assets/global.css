@@ -1,5 +1,13 @@
 .big-margin-top{
-    margin-top: 4rem;
+    margin-top: 5rem;
+}
+
+.margin-top{
+    margin-top: 1rem;
+}
+
+.margin-bot{
+    margin-bottom: 1rem;
 }
 
 .big-margin-bot{
@@ -34,4 +42,8 @@ body{
 
 .float-left{
     float: left;
+}
+
+.infinite-margin{
+    margin: 10000px;
 }

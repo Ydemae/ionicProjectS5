@@ -78,7 +78,7 @@ export class DishService {
     }
 
     async dishIsInAMeal(id : number): Promise<boolean> {
-        return await this.dishRepository.query("SELECT COUNT(*) FROM dish WHERE dish.id = day_meals.dish_id AND dish.id = :id", [id]) > 0;
+        return await this.dishRepository.query("SELECT COUNT(*) FROM dish WHERE dish.id = day_meals.dish_id AND dish.id = ?", [id]) > 0;
     }
 
     async deleteDish(id : number): Promise<number> {
@@ -109,7 +109,7 @@ export class DishService {
     }
 
     async checkDishIsActivated(id : number) : Promise<boolean>{
-        return await this.dishRepository.query("SELECT COUNT(*) FROM dish WHERE dish.id = :id AND dish.active = 1", [id]) == 1;
+        return await this.dishRepository.query("SELECT COUNT(*) FROM dish WHERE dish.id = ? AND dish.active = 1", [id]) == 1;
     }
 
     async deactivateDish(id : number) : Promise<number>{

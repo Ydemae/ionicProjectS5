@@ -12,6 +12,7 @@ export class ApiConnectionService {
   constructor(private http : HttpClient) {}
 
   getApi(endpoint : string) : Observable<any>{
+    console.log(this.baseApiUrl + endpoint);
     return this.http.get(this.baseApiUrl + endpoint);
   }
 
