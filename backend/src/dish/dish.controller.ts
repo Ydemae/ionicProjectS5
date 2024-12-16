@@ -33,8 +33,7 @@ export class DishController {
 
     @Post('create')
     async create(@Body() data : any){
-        return data;
-        //return {"code" : await this.dishService.createDish(data)};
+        return {"code" : await this.dishService.createDish(data) ? 0 : 1};
     }
 
     @Get('delete/:id')

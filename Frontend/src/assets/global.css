@@ -47,4 +47,9 @@ body{
 .infinite-margin{
     margin: 10000px;
 }
-  
+
+.form-img{
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+}

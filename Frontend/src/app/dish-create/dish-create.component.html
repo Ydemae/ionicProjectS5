@@ -1,3 +1,5 @@
-<div class="content-wrapper">
-  <app-dish-form></app-dish-form>
-</div>
+<ion-content>
+  <div class="content-wrapper">
+    <app-dish-form [dishData]="DishData" (dataEmitter)="receiveDishData($event)" (cancelEmitter)="cancel()"></app-dish-form>
+  </div>
+</ion-content>

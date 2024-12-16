@@ -1,149 +1,150 @@
-<div class="content-wrapper">
-
-  <div *ngIf="this.showNotFoundError; else NormalCase">
-    <div class="alert alert-dismissible alert-danger">
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      An error occurred preventing the dish from being loaded. Please make sure the given id is correct or try to refresh the page. If the problem persists, please contact customer support.
-    </div>
-  </div>
-
-  <ng-template #NormalCase>
-
-    <div *ngIf="this.getIsFetched(); else notFetchedBlock">
-
-      <div class="modal" [ngClass]="{'show' : this.showModal}">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">{{this.modalTitle}}</h5>
-              <button type="button" class="btn-close" (click)="this.hideModal()" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="false"></span>
-              </button>
-            </div>
-            <div class="modal-body">
-              {{this.modalText}}
-            </div>
-            <div class="text-center">
-              <ion-row>
-                <ion-col size="6">
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="this.hideModal()">Cancel</button>
-                </ion-col>
-                <ion-col size="6" *ngIf="this.showDeletionButton">
-                  <button type="button" class="btn btn-danger" (click)="deleteDish()">Delete</button>
-                </ion-col>
-                <ion-col size="6" *ngIf="this.showDeactivationButton">
-                  <button type="button" class="btn btn-danger" (click)="deactivateDish()">Deactivate</button>
-                </ion-col>
-                <ion-col size="6" *ngIf="this.showActivationButton">
-                  <button type="button" class="btn btn-danger" (click)="reactivateDish()">Reactivate</button>
-                </ion-col>
-              </ion-row>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal" [ngClass]="{'show' : this.showAddToMealsModal}">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Add {{this.getDishDetail().dish_name}} to today's meals</h5>
-              <button type="button" class="btn-close" (click)="this.hideAddToMealsModal()" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="false"></span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <ion-row>
-                <ion-col size="4">
-                  <ion-label>Grams you ate</ion-label>
-                </ion-col>
-                <ion-col size="5">
-                  <ion-input type="number" [(ngModel)]="quantity" color="primary" (change)="this.updateAddToMealsData()"></ion-input>
-                </ion-col>
-              </ion-row>
-              <table class="table table-hover text-center">
-                <thead>
-                  <tr>
-                    <th>Calories</th>
-                    <th>Protéines</th>
-                    <th>Lipides</th>
-                    <th>Glucides</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{this.data_kcal}}</td>
-                    <td>{{this.data_prot}}</td>
-                    <td>{{this.data_lip}}</td>
-                    <td>{{this.data_glu}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="text-center">
-              <ion-row>
-                <ion-col>
-                  <ion-button type="button" color="primary" (click)="addToMeals()">I ate it !</ion-button>
-                </ion-col>
-                <ion-col>
-                  <ion-button type="button" color="danger" data-bs-dismiss="modal" (click)="this.hideAddToMealsModal()">Cancel</ion-button>
-                </ion-col>
-              </ion-row>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <h1>{{this.getDishDetail().dish_name}}</h1>
-
-      <h3 class="margin-top">Valeurs nutritionnelles pour 100g</h3>
-      <table class="table table-hover text-center">
-        <thead>
-          <tr>
-            <th>Calories</th>
-            <th>Protéines</th>
-            <th>Lipides</th>
-            <th>Glucides</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{this.getDishDetail().dish_kcal}}</td>
-            <td>{{this.getDishDetail().dish_prot}}</td>
-            <td>{{this.getDishDetail().dish_lip}}</td>
-            <td>{{this.getDishDetail().dish_glu}}</td>
-          </tr>
-        </tbody>
-      </table>
-  
-      <ion-grid style="--ion-grid-column-padding: 10px;">
-        <ion-row class="text-center">
-          <ion-col *ngIf="this.getDishDetail().active" sizeXs="6" sizeMd="3">
-            <ion-button class="text-white" color="primary" (click)="popAddToMealsModal()">Eat it !</ion-button>
-          </ion-col>
-          <ion-col *ngIf="this.getDishDetail().active" sizeXs="6" sizeMd="3">
-            <ion-button class="text-white" color="danger" (click)="popDeletionConfirmationModal()">Delete</ion-button>
-          </ion-col>
-          <ion-col *ngIf="this.getDishDetail().active" sizeXs="6" sizeMd="3">
-            <ion-button class="text-white" color="warning" (click)="popDeactivationConfirmationModal()">Deactivate</ion-button>
-          </ion-col>
-          <ion-col *ngIf="!this.getDishDetail().active" sizeXs="6" sizeMd="3">
-            <ion-button class="text-white" color="primary" (click)="popReactivationConfirmationModal()">Reactivate</ion-button>
-          </ion-col>
-          <ion-col sizeXs="6" sizeMd="3">
-            <ion-button class="text-white" color="warning">Edit</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-
-
-
-    <ng-template #notFetchedBlock>
-      <div class="alert alert-dismissible alert-secondary">
+<ion-content>
+  <div class="content-wrapper">
+    <div *ngIf="this.showNotFoundError; else NormalCase">
+      <div class="alert alert-dismissible alert-danger">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <strong class="text-center">Data is being fetched</strong>
+        An error occurred preventing the dish from being loaded. Please make sure the given id is correct or try to refresh the page. If the problem persists, please contact customer support.
       </div>
+    </div>
+  
+    <ng-template #NormalCase>
+  
+      <div *ngIf="this.getIsFetched(); else notFetchedBlock">
+  
+        <div class="modal" [ngClass]="{'show' : this.showModal}">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{this.modalTitle}}</h5>
+                <button type="button" class="btn-close" (click)="this.hideModal()" data-bs-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="false"></span>
+                </button>
+              </div>
+              <div class="modal-body">
+                {{this.modalText}}
+              </div>
+              <div class="text-center">
+                <ion-row>
+                  <ion-col size="6">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="this.hideModal()">Cancel</button>
+                  </ion-col>
+                  <ion-col size="6" *ngIf="this.showDeletionButton">
+                    <button type="button" class="btn btn-danger" (click)="deleteDish()">Delete</button>
+                  </ion-col>
+                  <ion-col size="6" *ngIf="this.showDeactivationButton">
+                    <button type="button" class="btn btn-danger" (click)="deactivateDish()">Deactivate</button>
+                  </ion-col>
+                  <ion-col size="6" *ngIf="this.showActivationButton">
+                    <button type="button" class="btn btn-danger" (click)="reactivateDish()">Reactivate</button>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="modal" [ngClass]="{'show' : this.showAddToMealsModal}">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Add {{this.getDishDetail().dish_name}} to today's meals</h5>
+                <button type="button" class="btn-close" (click)="this.hideAddToMealsModal()" data-bs-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="false"></span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <ion-row>
+                  <ion-col size="4">
+                    <ion-label>Grams you ate</ion-label>
+                  </ion-col>
+                  <ion-col size="5">
+                    <ion-input type="number" [(ngModel)]="quantity" color="primary" (change)="this.updateAddToMealsData()"></ion-input>
+                  </ion-col>
+                </ion-row>
+                <table class="table table-hover text-center">
+                  <thead>
+                    <tr>
+                      <th>Calories</th>
+                      <th>Protéines</th>
+                      <th>Lipides</th>
+                      <th>Glucides</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{this.data_kcal}}</td>
+                      <td>{{this.data_prot}}</td>
+                      <td>{{this.data_lip}}</td>
+                      <td>{{this.data_glu}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-center">
+                <ion-row>
+                  <ion-col>
+                    <ion-button type="button" color="primary" (click)="addToMeals()">I ate it !</ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button type="button" color="danger" data-bs-dismiss="modal" (click)="this.hideAddToMealsModal()">Cancel</ion-button>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <h1>{{this.getDishDetail().dish_name}}</h1>
+  
+        <h3 class="margin-top">Valeurs nutritionnelles pour 100g</h3>
+        <table class="table table-hover text-center">
+          <thead>
+            <tr>
+              <th>Calories</th>
+              <th>Protéines</th>
+              <th>Lipides</th>
+              <th>Glucides</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{this.getDishDetail().dish_kcal}}</td>
+              <td>{{this.getDishDetail().dish_prot}}</td>
+              <td>{{this.getDishDetail().dish_lip}}</td>
+              <td>{{this.getDishDetail().dish_glu}}</td>
+            </tr>
+          </tbody>
+        </table>
+    
+        <ion-grid style="--ion-grid-column-padding: 10px;">
+          <ion-row class="text-center">
+            <ion-col *ngIf="this.getDishDetail().active" sizeXs="6" sizeMd="3">
+              <ion-button class="text-white" color="primary" (click)="popAddToMealsModal()">Eat it !</ion-button>
+            </ion-col>
+            <ion-col *ngIf="this.getDishDetail().active" sizeXs="6" sizeMd="3">
+              <ion-button class="text-white" color="danger" (click)="popDeletionConfirmationModal()">Delete</ion-button>
+            </ion-col>
+            <ion-col *ngIf="this.getDishDetail().active" sizeXs="6" sizeMd="3">
+              <ion-button class="text-white" color="warning" (click)="popDeactivationConfirmationModal()">Deactivate</ion-button>
+            </ion-col>
+            <ion-col *ngIf="!this.getDishDetail().active" sizeXs="6" sizeMd="3">
+              <ion-button class="text-white" color="primary" (click)="popReactivationConfirmationModal()">Reactivate</ion-button>
+            </ion-col>
+            <ion-col sizeXs="6" sizeMd="3">
+              <ion-button class="text-white" color="warning">Edit</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+  
+  
+  
+      <ng-template #notFetchedBlock>
+        <div class="alert alert-dismissible alert-secondary">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <strong class="text-center">Data is being fetched</strong>
+        </div>
+      </ng-template>
     </ng-template>
-  </ng-template>
-</div>
+  </div>
+</ion-content>

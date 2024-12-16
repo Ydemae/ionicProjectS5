@@ -40,6 +40,6 @@ export class DishService {
   }
 
   createDish(data : Dish){
-
+    return this.apiConnection.postApi('/dish/create', data);
   }
 }

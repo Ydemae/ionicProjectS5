@@ -66,7 +66,7 @@ export class DishService {
         return 0;
     }
 
-    createDish(dishData: Partial<Dish>): boolean {
+    async createDish(dishData: Partial<Dish>): Promise<boolean> {
         try{
             const createdDish = this.dishRepository.create(dishData);
             this.dishRepository.save(createdDish);

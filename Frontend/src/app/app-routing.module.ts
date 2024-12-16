@@ -23,7 +23,7 @@ const routes: Routes = [
     component: DishDetailComponent
   },
   {
-    path: 'dish/create',
+    path: 'dish_create',
     component: DishCreateComponent
   },
 ];
