@@ -63,6 +63,7 @@ export class RunningComponent  implements OnInit, OnDestroy {
   }
 
   ManagePositionChange(data : any){
+    console.log(data);
     if (this.lastLatitude != 0 && this.lastLongitude != 0){
       //Updates travelled distance
       this.totalDistance += this.calculateDistance(
@@ -83,7 +84,7 @@ export class RunningComponent  implements OnInit, OnDestroy {
   
   calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     //Calculates distance between to pair latitude/longitude by using the haversine formula
-    const R = 6371;
+    const R = 6371000;
     const dLat = this.toRadians(lat2 - lat1);
     const dLon = this.toRadians(lon2 - lon1);
   

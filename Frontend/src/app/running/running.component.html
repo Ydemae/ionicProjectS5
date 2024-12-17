@@ -3,7 +3,7 @@
     <h1>Running</h1>
   
     <p>Time : {{formatTime(stopwatchTime)}}</p>
-    <p>Distance : {{totalDistance}}</p>
+    <p>Distance : {{totalDistance}} m</p>
 
     <div *ngIf="running else NotRunning">
       <ion-button color="danger" (click)="stopRunning()">stop</ion-button>
