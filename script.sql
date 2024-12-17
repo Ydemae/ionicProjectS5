@@ -7,7 +7,7 @@ CREATE TABLE dish(
     dish_prot FLOAT,
     dish_lip FLOAT,
     dish_glu FLOAT,
-    image_url varchar(300),
+    image_url varchar(2048),
     active BOOLEAN DEFAULT 1
 );
 

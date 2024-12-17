@@ -56,11 +56,12 @@ export class DishService {
         return this.dishRepository.findOne({where : { id }})
     }
 
-    async updateDish(id: number, dishData: Partial<Dish>): Promise<number> {
+    async updateDish(dishData: Partial<Dish>): Promise<number> {
         try{
-            await this.dishRepository.update(id, dishData);
+            await this.dishRepository.update(dishData.id, dishData);
         }
         catch(e){
+            console.log(e);
             return 1;
         }
         return 0;
@@ -132,7 +133,7 @@ export class DishService {
 
             dish["active"] = false;
             
-            const res = await this.updateDish(id, dish);
+            const res = await this.updateDish(dish);
 
             return res == 0 ? 0 : 1;
         }
@@ -156,7 +157,7 @@ export class DishService {
 
             dish["active"] = true;
             
-            const res = await this.updateDish(id, dish);
+            const res = await this.updateDish(dish);
 
             return res == 0 ? 0 : 1;
         }

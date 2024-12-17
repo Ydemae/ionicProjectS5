@@ -42,11 +42,11 @@ export class DishCreateComponent  implements OnInit {
             this.router.navigate(["/dish"]);
           }
           else{
-            this.toastService.showErrorToast("An unexpected error occurred while creating product")
+            this.toastService.showErrorToast("An unexpected error occurred while creating dish")
           }
         },
         error: (error) => {
-          this.toastService.showErrorToast("An unexpected error occurred while creating product")
+          this.toastService.showErrorToast("An unexpected error occurred while creating dish")
         }
       }
     )

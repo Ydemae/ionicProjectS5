@@ -28,7 +28,7 @@ export class DishController {
 
     @Post('update')
     async update(@Body() data : any){
-        console.log(data);
+        return {"code" : await this.dishService.updateDish(data)};
     }
 
     @Post('create')

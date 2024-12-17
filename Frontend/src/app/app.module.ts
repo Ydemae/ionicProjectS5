@@ -18,6 +18,8 @@ import { CommonModule } from '@angular/common';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { FormsModule } from '@angular/forms';
 import { DishFormComponent } from './dish-form/dish-form.component';
+import { DishEditComponent } from './dish-edit/dish-edit.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { DishFormComponent } from './dish-form/dish-form.component';
     NavbarComponent,
     DishDetailComponent,
     DishCreateComponent,
-    DishFormComponent
+    DishFormComponent,
+    DishEditComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

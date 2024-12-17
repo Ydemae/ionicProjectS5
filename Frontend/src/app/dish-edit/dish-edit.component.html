@@ -1,0 +1,22 @@
+<ion-content>
+
+  <div *ngIf="this.isFetched else Error">
+    <div class="content-wrapper">
+      <app-dish-form [dishData]="dishDetail" (dataEmitter)="receiveDishData($event)" (cancelEmitter)="cancel()"></app-dish-form>
+    </div>
+  </div>
+
+  <ng-template #Error>
+    <div class="alert alert-dismissible alert-danger" *ngIf="showNotFoundError else NotFetched">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      An error occurred preventing the dish from being loaded. Please make sure the given id is correct or try to refresh the page. If the problem persists, please contact customer support.
+    </div>
+  </ng-template>
+
+  <ng-template #NotFetched>
+    <div class="alert alert-dismissible alert-secondary">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <strong class="text-center">Data is being fetched</strong>
+    </div>
+  </ng-template>
+</ion-content>

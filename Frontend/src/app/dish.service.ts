@@ -42,4 +42,8 @@ export class DishService {
   createDish(data : Dish){
     return this.apiConnection.postApi('/dish/create', data);
   }
+
+  updateDish(data : Dish){
+    return this.apiConnection.postApi('/dish/update', data);
+  }
 }

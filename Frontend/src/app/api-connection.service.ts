@@ -17,6 +17,8 @@ export class ApiConnectionService {
   }
 
   postApi(endpoint: string, data : any) : Observable<any>{
+    console.log(this.baseApiUrl + endpoint);
+    console.log(data);
     return this.http.post(this.baseApiUrl + endpoint, data);
   }
 }
