@@ -1,0 +1,22 @@
+<ion-content>
+  <div class="content-wrapper text-center">
+    <h1>Running</h1>
+  
+    <p>Time : {{formatTime(stopwatchTime)}}</p>
+    <p>Distance : {{totalDistance}}</p>
+
+    <div *ngIf="running else NotRunning">
+      <ion-button color="danger" (click)="stopRunning()">stop</ion-button>
+    </div>
+    <ng-template #NotRunning>
+      <ion-row>
+        <ion-col size="6">
+          <ion-button color="primary" (click)="startRunning()">Start</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button color="danger" (click)="resetRun()">Reset</ion-button>
+        </ion-col>
+      </ion-row>
+    </ng-template>
+  </div>
+</ion-content>

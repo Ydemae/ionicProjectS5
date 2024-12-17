@@ -5,6 +5,7 @@ import { DishDetailComponent } from './dish-detail/dish-detail.component';
 import { DishCreateComponent } from './dish-create/dish-create.component';
 import { DishEditComponent } from './dish-edit/dish-edit.component';
 import { AboutComponent } from './about/about.component';
+import { RunningComponent } from './running/running.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent
+  },
+  {
+    path: 'running',
+    component: RunningComponent
   },
 ];
 

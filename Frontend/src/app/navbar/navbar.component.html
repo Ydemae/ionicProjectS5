@@ -1,5 +1,9 @@
 <ion-tabs>
   <ion-tab-bar slot="top">
+    <ion-tab-button (click)="goBack()" class="absolute-left" *ngIf="this.displayBackButton">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-tab-button>
+
     <ion-tab-button tab="home" routerLink="/">
       <ion-icon name="home-outline"></ion-icon>
       <ion-label>Home</ion-label>
@@ -8,6 +12,11 @@
     <ion-tab-button tab="dish" routerLink="/dish">
       <ion-icon name="pizza-outline"></ion-icon>
       <ion-label>Dishes</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="running" routerLink="/running">
+      <ion-icon src="assets/icons/running.svg"></ion-icon>
+      <ion-label>Running</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="about" routerLink="/about">

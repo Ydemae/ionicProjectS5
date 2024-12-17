@@ -53,3 +53,8 @@ body{
     height: 300px;
     object-fit: contain;
 }
+
+.absolute-left{
+    position: absolute;
+    left: 10px;
+}
