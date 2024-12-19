@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { SessionService } from './session.service';
 
@@ -19,29 +19,18 @@ export class AppComponent {
   ) {}
 
   async ngOnInit(){
-    await this.sessionService.setSession("HistoryNotEmpty", false);
     await this.sessionService.setSession("back", false);
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        console.log(this.history);
-        
+    this.router.events.subscribe(async (event) => {
+      if (event instanceof NavigationStart) {
         //Check if we're going back to know if we add it to the pile or not
-        this.sessionService.getSession("back").then(
-          (back) => {
-            if (!back){
-              this.history.push(event.url);
-              if (this.history.length > 0){
-                this.sessionService.setSession("HistoryNotEmpty", true)
-              }
-              else{
-                this.sessionService.setSession("HistoryNotEmpty", false)
-              }
-            }
-            else{
-              this.sessionService.setSession("back", false);
-            }
-          }
-        )
+        const back = await this.sessionService.getSession("back");
+
+        if (!back){
+          this.history.push(event.url);
+        }
+        else{
+          await this.sessionService.setSession("back", false);
+        }
       }
     });
   }

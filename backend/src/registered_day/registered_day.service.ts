@@ -9,6 +9,10 @@ export class RegisteredDayService {
     @InjectRepository(RegisteredDay) private readonly dayRepository : Repository<RegisteredDay>
 
 
+    async getByDay(day_date : string){
+        return await this.dayRepository.query("SELECT id FROM registered_day WHERE day_date = ?", [day_date]);
+    }
+
     async dateExists(day_date : string) : Promise<boolean>{
         return await this.dayRepository.exists({where: {day_date}});
     }

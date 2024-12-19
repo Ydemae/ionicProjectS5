@@ -15,8 +15,8 @@ export class DayMealsService {
         return `${year}-${month}-${day}`;
     }
 
-    async get(dateStart : string = "", dateEnd : string = "") : Promise<DayMeals[]>{
-        let query = "SELECT day_date.id, day_date.dish_id, day_date.day_id FROM day_meals WHERE day_date.day_id = registered_day.id";
+    async get(dateStart : string = "", dateEnd : string = "", id : number = null) : Promise<DayMeals[]>{
+        let query = "SELECT day_meals.id, day_meals.dish_id, day_meals.day_id, day_meals.quantity, dish.dish_kcal, dish.dish_prot, dish.dish_glu, dish.dish_lip FROM day_meals, registered_day, dish WHERE day_meals.day_id = registered_day.id AND day_meals.dish_id = dish.id";
 
         let parameters = [];
 
@@ -24,6 +24,13 @@ export class DayMealsService {
             query += " AND registered_day.day_date >= ? AND registered_day.day_date <= ?";
             parameters.push(dateStart, dateEnd);
         }
+
+        if (id != null){
+            query += " AND day_meals.id = ?";
+            parameters.push(id);
+        }
+
+        query += " ORDER BY day_meals.id DESC";
 
         return await this.dayMealsRepository.query(query, parameters);
     }
@@ -38,16 +45,43 @@ export class DayMealsService {
         return await this.get(formatedDate, formatedDate);
     }
 
-    create(dish_id : number, quantity : number){
-
-        
+    async create(dayMeal : Partial<DayMeals>){
+        try{
+            const createdDayMeal = this.dayMealsRepository.create(dayMeal);
+            await this.dayMealsRepository.save(createdDayMeal);
+            return true;
+        }
+        catch(e){
+            return false;
+        }
     }
 
-    delete(){
+    async delete(id : number){
+        try{
+            const dayMealToRemove = await this.get("", "", id)[0];
+            
+            if (!dayMealToRemove){
+                return 2;
+            }
 
+            await this.dayMealsRepository.remove(dayMealToRemove);
+            return 0;
+        }
+        catch(e){
+            return 1;
+        }
     }
 
-    update(){
+    async update(id : number, quantity : number){
+        try{
+            let data = await this.get("", "", id)[0];
+            data["quantity"] = quantity;
+            this.dayMealsRepository.update(id, data);
 
+            return 0;
+        }
+        catch(e){
+            return 1;
+        }
     }
 }

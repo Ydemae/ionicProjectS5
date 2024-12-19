@@ -1,5 +1,5 @@
 <ion-app>
-  <app-navbar (backEmitter)="goBack()"></app-navbar>
+  <app-navbar (backEmitter)="goBack()" [displayBackButton]="history.length > 0"></app-navbar>
   <ion-router-outlet class="infinite-margin">
   </ion-router-outlet>
 </ion-app>

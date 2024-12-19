@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SessionService } from '../session.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,36 +9,17 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class NavbarComponent {
 
-  public displayBackButton = false;
+  @Input()
+  public displayBackButton : boolean = false;
 
   @Output()
   public backEmitter = new EventEmitter<any>();
 
-  constructor(
-    private sessionService : SessionService,
-    private router : Router
-  ) { }
+  constructor() { }
 
   goBack(){
     this.backEmitter.emit(null);
   }
 
-  async ngOnInit(){
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.sessionService.getSession("HistoryNotEmpty").then(
-          (historyNotEmpty) => {
-            console.log(historyNotEmpty);
-            if (historyNotEmpty){
-              this.displayBackButton = true;
-            }
-            else{
-              this.displayBackButton = false;
-            }
-          }
-        )
-        }
-      }
-    )
-  };
+  async ngOnInit(){};
 }

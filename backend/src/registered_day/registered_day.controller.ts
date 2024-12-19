@@ -9,13 +9,17 @@ export class RegisteredDayController {
     ) {}
 
     @Get('')
-    Create(){
-        return this.registeredDayService.createDay();
+    async Create(){
+        return await this.registeredDayService.createDay();
     }
 
     @Get('exists/:date')
-    Exists(@Param('date') date : string){
-        return this.registeredDayService.dateExists(date)
+    async Exists(@Param('date') date : string){
+        let dayExists = await this.registeredDayService.dateExists(date);
+        if (dayExists){
+            return await this.registeredDayService.getByDay(date);
+        }
+        return {"code" : dayExists ? 0 : 1};
     }
     
 
