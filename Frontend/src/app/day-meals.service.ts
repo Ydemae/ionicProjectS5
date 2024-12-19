@@ -9,23 +9,23 @@ export class DayMealsService {
   constructor(private apiConnection : ApiConnectionService ) { }
   
   getToday(){
-    return this.apiConnection.getApi("/getToday");
+    return this.apiConnection.getApi("/day-meals/getToday");
   }
 
   getAll(){
-    return this.apiConnection.getApi("/getAll");
+    return this.apiConnection.getApi("/day-meals/getAll");
   }
 
   delete(id : number){
-    return this.apiConnection.getApi(`/delete/${id}`)
+    return this.apiConnection.getApi(`/day-meals/delete/${id}`)
   }
 
   update(id : number, quantity : number){
-    return this.apiConnection.postApi("/update", {"id" : id, "quantity" : quantity});
+    return this.apiConnection.postApi("/day-meals/update", {"id" : id, "quantity" : quantity});
   }
 
   create(data : any){
-    return this.apiConnection.postApi("/create", data);
+    return this.apiConnection.postApi("/day-meals/create", data);
   }
 
 }

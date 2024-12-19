@@ -9,12 +9,12 @@ export class RegisteredDayService {
     @InjectRepository(RegisteredDay) private readonly dayRepository : Repository<RegisteredDay>
 
 
-    async getByDay(day_date : string){
+    async getByDay(day_date : string): Promise<Array<any>>{
         return await this.dayRepository.query("SELECT id FROM registered_day WHERE day_date = ?", [day_date]);
     }
 
     async dateExists(day_date : string) : Promise<boolean>{
-        return await this.dayRepository.exists({where: {day_date}});
+        return (await this.getByDay(day_date)).length > 0;
     }
 
     private formatDateToYmd(date: Date): string {
@@ -26,30 +26,22 @@ export class RegisteredDayService {
       
 
     async createDay(): Promise<number> {
-        /**
-         * Returns a code based on the result
-         * 0 - Date was created
-         * 1 - Unexpected error
-         * 2 - Date already exists for current day
-         */
-
-
         const todayDate = new Date();
         
         const day_date = this.formatDateToYmd(todayDate);
 
-        if (this.dateExists(day_date)){
-            return 2
+        if (await this.dateExists(day_date)){
+            return -1
         }
 
         try{
             const createdDay = this.dayRepository.create();
             createdDay.day_date = day_date;
             await this.dayRepository.save(createdDay);
-            return 0;
+            return createdDay.id;
         }
         catch(e){
-            return 1;
+            return -1;
         }
     }
 

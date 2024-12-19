@@ -21,6 +21,7 @@ import { DishFormComponent } from './dish-form/dish-form.component';
 import { DishEditComponent } from './dish-edit/dish-edit.component';
 import { AboutComponent } from './about/about.component';
 import { RunningComponent } from './running/running.component';
+import { MealsListComponent } from './meals-list/meals-list.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { RunningComponent } from './running/running.component';
     DishFormComponent,
     DishEditComponent,
     AboutComponent,
-    RunningComponent
+    RunningComponent,
+    MealsListComponent
   ],
   imports: [
     BrowserModule,

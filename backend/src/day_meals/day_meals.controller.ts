@@ -8,6 +8,7 @@ export class DayMealsController {
 
     @Get("getToday")
     async getToday(){
+        console.log(await this.dayMealsService.getToday());
         return await this.dayMealsService.getToday();
     }
 
@@ -28,6 +29,6 @@ export class DayMealsController {
 
     @Post("create")
     async create(@Body() data : any){
-        return {"code" : await this.dayMealsService.create(data)};
+        return {"code" : await this.dayMealsService.create(data) ? 0 : 1};
     }
 }

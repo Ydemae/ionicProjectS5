@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { DomSanitizer } from '@angular/platform-browser';
+import { NavController, ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,9 @@ import { ToastController } from '@ionic/angular';
 export class ToastService {
 
   constructor(
-    private toastController : ToastController
+    private toastController : ToastController,
+    private domSanitizer : DomSanitizer,
+    private navController : NavController
   ) { }
 
 
@@ -32,6 +35,26 @@ export class ToastService {
 
   showSuccessToast(message : string){
     this.showToast(message, 2000, 'success');
+  }
+
+  async showSuccessToastWithLink(message : string){
+
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom',
+      color: 'success',
+      buttons:[
+        {
+          text: 'Manage your meals',
+          handler: () => {
+            this.navController.navigateForward("/mealsList")
+          }
+        }
+      ]
+    });
+
+    await toast.present();
   }
 
 }

@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Dish } from '../types/dishType';
 import { ToastService } from '../toast.service';
 import { SessionService } from '../session.service';
+import { DayMealsService } from '../day-meals.service';
+import { RegisteredDayService } from '../registered-day.service';
 
 @Component({
   selector: 'app-dish-detail',
@@ -35,7 +37,9 @@ export class DishDetailComponent  implements OnInit {
     private route : ActivatedRoute,
     private toastService : ToastService,
     private sessionService : SessionService,
-    private router : Router
+    private router : Router,
+    private dayMealsService : DayMealsService,
+    private registeredDayService : RegisteredDayService
   ) { }
 
   ngOnInit() {
@@ -68,8 +72,71 @@ export class DishDetailComponent  implements OnInit {
     return this.isFetched;
   }
 
-  addToMeals(){
+  private formatDateToYmd(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 
+  addToMeals(){
+    this.registeredDayService.dateExists(this.formatDateToYmd(new Date())).subscribe(
+      {
+        next: (response) => {
+
+          //The day isn't registered
+          if (response["code"] == 1){
+            this.registeredDayService.create().subscribe({
+              next: (response) => {
+                if (response["id"] == -1){
+                  this.toastService.showErrorToast("Unexpected error occurred when trying to create registered day");
+                }
+                else
+                {
+                  const registeredDayId = response["id"];
+
+                  this.createMeal(registeredDayId);
+                }
+              },
+              error: (error) => {
+                this.toastService.showErrorToast("Unexpected error occurred when trying to create registered day");
+              }
+            })
+          }
+          //The day is registered
+          else{
+            const registeredDayId = response[0]["id"];
+            
+            this.createMeal(registeredDayId);
+          }
+        },
+        error: (error) => {
+          this.toastService.showErrorToast("Unexpected error occurred when trying to test existence of registered day");
+        }
+      }
+    )
+  }
+
+  private createMeal(id : number){
+    this.dayMealsService.create({
+      "id" : 0,
+      "dish" : this.dishDetail,
+      "day" : id,
+      "quantity" : this.quantity
+    }).subscribe({
+      next: (response) => {
+        if (response["code"] == 0){
+          this.hideAddToMealsModal();
+          this.toastService.showSuccessToastWithLink(`The meal has been successfully registered.`);
+        }
+        else{
+          this.toastService.showErrorToast("An unexpected error occurred while trying to add the meal");
+        }
+      },
+      error : (error) => {
+        this.toastService.showErrorToast("An unexpected error occurred while trying to add the meal");
+      }
+    })
   }
 
   deleteDish(){

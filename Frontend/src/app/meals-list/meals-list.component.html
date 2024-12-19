@@ -1,0 +1,38 @@
+<ion-content>
+  <div class="content-wrapper">
+    <div class="text-center" *ngIf="this.allMealsFetched && this.todayMealsFetched else NotFetched">
+      <h1 class="text-center">Today's meals</h1>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Dish name</th>
+            <th>Dish quantity</th>
+            <th>Calories</th>
+            <th>Proteins</th>
+            <th>Lipids</th>
+            <th>Carbs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let meal of todayMeals">
+            <td>{{meal["dish_name"]}}</td>
+            <td>{{meal["quantity"]}}</td>
+            <td>{{meal["quantity"]/100 * meal["dish_kcal"]}}</td>
+            <td>{{meal["quantity"]/100 * meal["dish_prot"]}}</td>
+            <td>{{meal["quantity"]/100 * meal["dish_lip"]}}</td>
+            <td>{{meal["quantity"]/100 * meal["dish_glu"]}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <ng-template #NotFetched>
+      <div class="alert alert-dismissible alert-secondary">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong class="text-center">Data is being fetched</strong>
+      </div>
+    </ng-template>
+
+  </div>
+</ion-content>

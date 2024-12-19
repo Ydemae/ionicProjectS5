@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { RegisteredDayService } from './registered_day.service';
 
 @Controller('registered-day')
@@ -10,16 +10,18 @@ export class RegisteredDayController {
 
     @Get('')
     async Create(){
-        return await this.registeredDayService.createDay();
+        return {"id" : await this.registeredDayService.createDay()};
     }
 
-    @Get('exists/:date')
-    async Exists(@Param('date') date : string){
-        let dayExists = await this.registeredDayService.dateExists(date);
+    @Post('exists')
+    async Exists(@Body() data : any){
+        let dayExists = await this.registeredDayService.dateExists(data["date"]);
         if (dayExists){
-            return await this.registeredDayService.getByDay(date);
+            return await this.registeredDayService.getByDay(data["date"]);
         }
-        return {"code" : dayExists ? 0 : 1};
+        else{
+            return {"code" : dayExists ? 0 : 1};
+        }
     }
     
 

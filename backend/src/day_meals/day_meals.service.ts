@@ -16,7 +16,7 @@ export class DayMealsService {
     }
 
     async get(dateStart : string = "", dateEnd : string = "", id : number = null) : Promise<DayMeals[]>{
-        let query = "SELECT day_meals.id, day_meals.dish_id, day_meals.day_id, day_meals.quantity, dish.dish_kcal, dish.dish_prot, dish.dish_glu, dish.dish_lip FROM day_meals, registered_day, dish WHERE day_meals.day_id = registered_day.id AND day_meals.dish_id = dish.id";
+        let query = "SELECT day_meals.id as id, day_meals.dish_id as dish_id, day_meals.day_id as day_id, day_meals.quantity as quantity, dish.dish_kcal as dish_kcal, dish.dish_prot as dish_prot, dish.dish_glu as dish_glu, dish.dish_lip as dish_lip, dish.dish_name as dish_name FROM day_meals, registered_day, dish WHERE day_meals.day_id = registered_day.id AND day_meals.dish_id = dish.id";
 
         let parameters = [];
 
