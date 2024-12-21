@@ -43,7 +43,7 @@ const routes: Routes = [
     component: RunningComponent
   },
   {
-    path: 'mealsList',
+    path: 'profile',
     component: MealsListComponent
   },
 ];

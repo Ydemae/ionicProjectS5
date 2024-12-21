@@ -1,29 +1,98 @@
 <ion-content>
   <div class="content-wrapper">
-    <div class="text-center" *ngIf="this.allMealsFetched && this.todayMealsFetched else NotFetched">
-      <h1 class="text-center">Today's meals</h1>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Dish name</th>
-            <th>Dish quantity</th>
-            <th>Calories</th>
-            <th>Proteins</th>
-            <th>Lipids</th>
-            <th>Carbs</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let meal of todayMeals">
-            <td>{{meal["dish_name"]}}</td>
-            <td>{{meal["quantity"]}}</td>
-            <td>{{meal["quantity"]/100 * meal["dish_kcal"]}}</td>
-            <td>{{meal["quantity"]/100 * meal["dish_prot"]}}</td>
-            <td>{{meal["quantity"]/100 * meal["dish_lip"]}}</td>
-            <td>{{meal["quantity"]/100 * meal["dish_glu"]}}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="text-center" *ngIf="this.allMealsFetched else NotFetched">
+      <h1 class="text-center margin-top">Averages</h1>
+      <p>Gives you total averages for your calories and macronutrients</p>
+      <i>(note that these averages are refreshed only on page reloads)</i>
+
+
+      <ion-row>
+        <ion-col size="6">
+          <ion-card class="card border-warning mb-3" style="max-width: 20rem;">
+            <div class="card-header text-white text-center">Calories</div>
+            <h4 class="card-title">{{this.avgCalories}}</h4>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card class="card border-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header text-white text-center">Proteins</div>
+            <h4 class="card-title">{{this.avgProt}}</h4>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card class="card border-info mb-3" style="max-width: 20rem;">
+            <div class="card-header text-white text-center">Lipids</div>
+            <h4 class="card-title">{{this.avgLip}}</h4>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card class="card border-secondary mb-3" style="max-width: 20rem;">
+            <div class="card-header text-white text-center">Carbs</div>
+            <h4 class="card-title">{{this.avgGlu}}</h4>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <h1 class="text-center margin-top">All meals</h1>
+
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item" *ngFor="let day of this.allDays; let i = index">
+          <h2 class="accordion-header" id="heading{{i}}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" aria-expanded="false" [attr.aria-controls]="'collapse' + i">
+              {{day}}
+            </button>
+          </h2>
+          <div id="collapse{{i}}" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading'+i" data-bs-parent="#accordionExample">
+            <ion-grid>
+              <ion-col>
+                <h4 class="text-center">Day Totals</h4>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-card class="card border-warning mb-3" style="max-width: 20rem;">
+                      <div class="card-header text-white text-center">Calories</div>
+                      <h4 class="card-title">{{this.totalsByDay[i].kcal}}</h4>
+                    </ion-card>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-card class="card border-primary mb-3" style="max-width: 20rem;">
+                      <div class="card-header text-white text-center">Proteins</div>
+                      <h4 class="card-title">{{this.totalsByDay[i].prot}}</h4>
+                    </ion-card>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-card class="card border-info mb-3" style="max-width: 20rem;">
+                      <div class="card-header text-white text-center">Lipids</div>
+                      <h4 class="card-title">{{this.totalsByDay[i].lip}}</h4>
+                    </ion-card>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-card class="card border-secondary mb-3" style="max-width: 20rem;">
+                      <div class="card-header text-white text-center">Carbs</div>
+                      <h4 class="card-title">{{this.totalsByDay[i].glu}}</h4>
+                    </ion-card>
+                  </ion-col>
+                </ion-row>
+                <h4 class="text-center margin-top">All meals of the day</h4>
+                  <ion-row>
+                    <app-meal-card 
+                      *ngFor="let meal of this.mealsByDay[i]"
+                      [id]="meal.id"
+                      [glu]="meal.dish_glu"
+                      [kcal]="meal.dish_kcal"
+                      [lip]="meal.dish_lip"
+                      [name]="meal.dish_name"
+                      [prot]="meal.dish_prot"
+                      [qt]="meal.quantity"
+                      (deleteEmitter)="this.delete($event)"
+                      (updateEmitter)="this.update($event)"
+                      >
+                    </app-meal-card>
+                  </ion-row>
+              </ion-col>
+            </ion-grid>
+          </div>
+        </div>
+      </div>
     </div>
 
 

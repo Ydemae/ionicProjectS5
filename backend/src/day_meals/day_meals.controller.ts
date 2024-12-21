@@ -8,7 +8,6 @@ export class DayMealsController {
 
     @Get("getToday")
     async getToday(){
-        console.log(await this.dayMealsService.getToday());
         return await this.dayMealsService.getToday();
     }
 

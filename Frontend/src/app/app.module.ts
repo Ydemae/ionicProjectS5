@@ -22,6 +22,7 @@ import { DishEditComponent } from './dish-edit/dish-edit.component';
 import { AboutComponent } from './about/about.component';
 import { RunningComponent } from './running/running.component';
 import { MealsListComponent } from './meals-list/meals-list.component';
+import { MealCardComponent } from './meal-card/meal-card.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MealsListComponent } from './meals-list/meals-list.component';
     DishEditComponent,
     AboutComponent,
     RunningComponent,
-    MealsListComponent
+    MealsListComponent,
+    MealCardComponent
   ],
   imports: [
     BrowserModule,

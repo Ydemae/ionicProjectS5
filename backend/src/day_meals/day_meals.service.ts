@@ -16,7 +16,7 @@ export class DayMealsService {
     }
 
     async get(dateStart : string = "", dateEnd : string = "", id : number = null) : Promise<DayMeals[]>{
-        let query = "SELECT day_meals.id as id, day_meals.dish_id as dish_id, day_meals.day_id as day_id, day_meals.quantity as quantity, dish.dish_kcal as dish_kcal, dish.dish_prot as dish_prot, dish.dish_glu as dish_glu, dish.dish_lip as dish_lip, dish.dish_name as dish_name FROM day_meals, registered_day, dish WHERE day_meals.day_id = registered_day.id AND day_meals.dish_id = dish.id";
+        let query = "SELECT day_meals.id as id, day_meals.dish_id as dish_id, day_meals.day_id as day_id, day_meals.quantity as quantity, dish.dish_kcal as dish_kcal, dish.dish_prot as dish_prot, dish.dish_glu, registered_day.day_date as day_date, dish.dish_lip as dish_lip, dish.dish_name as dish_name FROM day_meals, registered_day, dish WHERE day_meals.day_id = registered_day.id AND day_meals.dish_id = dish.id";
 
         let parameters = [];
 
@@ -58,7 +58,7 @@ export class DayMealsService {
 
     async delete(id : number){
         try{
-            const dayMealToRemove = await this.get("", "", id)[0];
+            const dayMealToRemove = (await this.dayMealsRepository.findOneBy({id : id}));
             
             if (!dayMealToRemove){
                 return 2;
@@ -74,7 +74,7 @@ export class DayMealsService {
 
     async update(id : number, quantity : number){
         try{
-            let data = await this.get("", "", id)[0];
+            let data = (await this.dayMealsRepository.findOneBy({id : id}));
             data["quantity"] = quantity;
             this.dayMealsRepository.update(id, data);
 

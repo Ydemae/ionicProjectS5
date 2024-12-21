@@ -48,7 +48,7 @@ export class ToastService {
         {
           text: 'Manage your meals',
           handler: () => {
-            this.navController.navigateForward("/mealsList")
+            this.navController.navigateForward("/profile")
           }
         }
       ]
